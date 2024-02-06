@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Stage the app
+name: Deploy to staging
 
 # Controls when the workflow will run
 on:
@@ -96,6 +96,7 @@ jobs:
         with:
           app-name: ${{env.AZURE_WEBAPP_NAME}}
           images: ${{env.IMAGE_NAME}}
+          slot-name: 'staging'
 
       - name: Azure logout via Azure CLI
         uses: azure/CLI@v1

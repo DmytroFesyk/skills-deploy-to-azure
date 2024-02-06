@@ -9,7 +9,6 @@ env:
   AZURE_RESOURCE_GROUP: cd-with-actions
   AZURE_APP_PLAN: actions-ttt-deployment
   AZURE_LOCATION: '"East US"'
-  AZURE_WEBAPP_NAME: ${{ github.actor }}-ttt-app
 
 jobs:
   setup-up-azure-resources:
@@ -23,6 +22,10 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: lowercase webbappname
+        run: |
+          echo "AZURE_WEBAPP_NAME=`echo ${{ github.actor }}-ttt-app | tr '[:upper:]' '[:lower:]'`" >>${GITHUB_ENV}
 
       - name: Create Azure resource group
         if: success()
